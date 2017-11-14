@@ -41,7 +41,7 @@ public class ContextManagement {
     // Instantiates a client
     try (ContextsClient contextsClient = ContextsClient.create()) {
       // Set the session name using the sessionId (UUID) and projectId (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
 
       // Performs the list contexts request
       System.out.format("Contexts for session %s:\n", session.toString());
@@ -71,7 +71,7 @@ public class ContextManagement {
     // Instantiates a client
     try (ContextsClient contextsClient = ContextsClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
 
       // Create the context name with the projectId, sessionId, and contextId
       ContextName contextName = ContextName.newBuilder()
@@ -105,7 +105,7 @@ public class ContextManagement {
     // Instantiates a client
     try (ContextsClient contextsClient = ContextsClient.create()) {
       // Create the context name with the projectId, sessionId, and contextId
-      ContextName contextName = ContextName.create(projectId, sessionId, contextId);
+      ContextName contextName = ContextName.of(projectId, sessionId, contextId);
       // Performs the delete context request
       contextsClient.deleteContext(contextName);
     }
@@ -127,20 +127,30 @@ public class ContextManagement {
         if (command.equals("--sessionId")) {
           sessionId = args[2];
         }
+
+        command = args[3];
+        if (command.equals("--projectId")) {
+          projectId = args[4];
+        }
       } else if (method.equals("create") || method.equals("delete")) {
         if (command.equals("--sessionId")) {
           sessionId = args[2];
         }
 
         command = args[3];
-        if (command.equals("--contextId")) {
-          contextId = args[4];
+        if (command.equals("--projectId")) {
+          projectId = args[4];
         }
 
-        if (method.equals("create") && args.length > 5) {
-          command = args[5];
+        command = args[5];
+        if (command.equals("--contextId")) {
+          contextId = args[6];
+        }
+
+        if (method.equals("create") && args.length > 7) {
+          command = args[7];
           if (command.equals("--lifespanCount")) {
-            lifeSpanCount = Integer.valueOf(args[6]);
+            lifeSpanCount = Integer.valueOf(args[8]);
           }
         }
       }

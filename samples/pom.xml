@@ -24,13 +24,118 @@
         <projectId>PROJECT_ID</projectId> <!-- TODO SET PROJECT_ID -->
         <sessionId>SESSION_ID</sessionId> <!-- TODO SET SESSION_ID -->
         <contextId>CONTEXT_ID</contextId> <!-- TODO SET CONTEXT_ID -->
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <jacoco-maven-plugin>0.7.9</jacoco-maven-plugin>
+        <plexus-compiler-javac-errorprone>2.8.2</plexus-compiler-javac-errorprone>
+        <error_prone_core>2.0.21</error_prone_core>
+
+        <maven-failsafe-plugin>2.20</maven-failsafe-plugin>
+        <maven-surefire-plugin>2.20</maven-surefire-plugin>
+        <maven-checkstyle-plugin>2.17</maven-checkstyle-plugin>
+        <maven-clean-plugin>3.0.0</maven-clean-plugin>
+        <maven-deploy-plugin>2.8.2</maven-deploy-plugin>
+        <maven-install-plugin>2.5.2</maven-install-plugin>
+        <maven-site-plugin>3.6</maven-site-plugin>
+        <maven-compiler-plugin>3.6.2</maven-compiler-plugin>
+        <maven-resources-plugin>3.0.2</maven-resources-plugin>
+        <maven-war-plugin>3.0.0</maven-war-plugin>
+        <maven-assembly-plugin>3.0.0</maven-assembly-plugin>
+        <maven-jar-plugin>3.0.2</maven-jar-plugin>
+        <maven-source-plugin>3.0.1</maven-source-plugin>
+        <maven-archetype-plugin>3.0.1</maven-archetype-plugin>
+
+        <maven-release-plugin>2.5.3</maven-release-plugin>
+        <nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
+        <versions-maven-plugin>2.4</versions-maven-plugin>
+        <maven-gpg-plugin>1.6</maven-gpg-plugin>
     </properties>
+
+    <build>
+        <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin}</version>
+                <configuration>
+                    <compilerId>javac-with-errorprone</compilerId>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                        <version>${plexus-compiler-javac-errorprone}</version>
+                    </dependency>
+                    <!-- override plexus-compiler-javac-errorprone's dependency on
+                         Error Prone with the latest version -->
+                    <dependency>
+                        <groupId>com.google.errorprone</groupId>
+                        <artifactId>error_prone_core</artifactId>
+                        <version>${error_prone_core}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin}</version>
+                <configuration>
+                    <trimStackTrace>false</trimStackTrace>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- Integration / system tests -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
     <dependencies>
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-dialogflow</artifactId>
-            <version>0.26.1-alpha-SNAPSHOT</version>
+            <version>0.28.1-alpha-SNAPSHOT</version>
         </dependency>
 
         <!-- Test dependencies -->
@@ -46,9 +151,44 @@
             <version>0.35</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 
     <profiles>
+        <!--ContextManagement-->
+        <profile>
+            <id>ContextManagement</id>
+            <activation>
+                <property>
+                    <name>ContextManagement</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.ContextManagement</mainClass>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!--ContextManagementList-->
         <profile>
             <id>ContextManagementList</id>
@@ -77,7 +217,7 @@
                                 <argument>--sessionId</argument>
                                 <argument>${sessionId}</argument>
                                 <argument>--projectId</argument>
-                                <argument>${projectId}}</argument>
+                                <argument>${projectId}</argument>
                             </arguments>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>
@@ -114,7 +254,7 @@
                                 <argument>--sessionId</argument>
                                 <argument>${sessionId}</argument>
                                 <argument>--projectId</argument>
-                                <argument>${projectId}}</argument>
+                                <argument>${projectId}</argument>
                                 <argument>--contextId</argument>
                                 <argument>${contextId}</argument>
                             </arguments>
@@ -153,10 +293,40 @@
                                 <argument>--sessionId</argument>
                                 <argument>${sessionId}</argument>
                                 <argument>--projectId</argument>
-                                <argument>${projectId}}</argument>
+                                <argument>${projectId}</argument>
                                 <argument>--contextId</argument>
                                 <argument>${contextId}</argument>
                             </arguments>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--DetectIntentAudio-->
+        <profile>
+            <id>DetectIntentAudio</id>
+            <activation>
+                <property>
+                    <name>DetectIntentAudio</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.DetectIntentAudio</mainClass>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>
                     </plugin>
@@ -430,6 +600,36 @@
             </build>
         </profile>
 
+        <!--DetectIntentStream-->
+        <profile>
+            <id>DetectIntentStream</id>
+            <activation>
+                <property>
+                    <name>DetectIntentStream</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.DetectIntentStream</mainClass>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!--DetectIntentStreamMountainView-->
         <profile>
             <id>DetectIntentStreamMountainView</id>
@@ -491,6 +691,36 @@
                         </executions>
                         <configuration>
                             <mainClass>com.example.dialogflow.DetectIntentTexts</mainClass>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--DetectIntentText-->
+        <profile>
+            <id>DetectIntentText</id>
+            <activation>
+                <property>
+                    <name>DetectIntentText</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.DetectIntentTexts</mainClass>
                             <arguments>
                                 <argument>--projectId</argument>
                                 <argument>${projectId}</argument>
@@ -506,6 +736,36 @@
                                 <argument>"A"</argument>
                                 <argument>"yes"</argument>
                             </arguments>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--EntityManagement-->
+        <profile>
+            <id>EntityManagement</id>
+            <activation>
+                <property>
+                    <name>EntityManagement</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.EntityManagement</mainClass>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>
                     </plugin>
@@ -629,6 +889,36 @@
             </build>
         </profile>
 
+        <!--EntityTypeManagement-->
+        <profile>
+            <id>EntityTypeManagement</id>
+            <activation>
+                <property>
+                    <name>EntityTypeManagement</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.EntityTypeManagement</mainClass>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!--EntityTypeManagementList-->
         <profile>
             <id>EntityTypeManagementList</id>
@@ -725,10 +1015,40 @@
                             <mainClass>com.example.dialogflow.EntityTypeManagement</mainClass>
                             <arguments>
                                 <argument>delete</argument>
-                                <argument>e57238e2-e692-44ea-9216-6be1b2332e2a</argument>
-                                <argument>--projectId</argument>
-                                <argument>${projectId}</argument>
+                                <!--<argument>fadf9a3b-eabc-4d09-b3e6-dda6a05bc0b6</argument>-->
+                                <!--<argument>&#45;&#45;projectId</argument>-->
+                                <!--<argument>${projectId}</argument>-->
                             </arguments>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--IntentManagement-->
+        <profile>
+            <id>IntentManagement</id>
+            <activation>
+                <property>
+                    <name>IntentManagement</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.IntentManagement</mainClass>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>
                     </plugin>
@@ -839,11 +1159,41 @@
                         <configuration>
                             <mainClass>com.example.dialogflow.IntentManagement</mainClass>
                             <arguments>
-                                <argument>delete</argument>
-                                <argument>74892d81-7901-496a-bb0a-c769eda5180e</argument>
-                                <argument>--projectId</argument>
-                                <argument>${projectId}</argument>
+                                <!--<argument>delete</argument>-->
+                                <!--<argument>e4ac227c-6b8f-4839-8a2d-b6edaf7d75d1</argument>-->
+                                <!--<argument>&#45;&#45;projectId</argument>-->
+                                <!--<argument>${projectId}</argument>-->
                             </arguments>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--SessionEntityTypeManagement-->
+        <profile>
+            <id>SessionEntityTypeManagement</id>
+            <activation>
+                <property>
+                    <name>SessionEntityTypeManagement</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.SessionEntityTypeManagement</mainClass>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>
                     </plugin>
@@ -878,6 +1228,8 @@
                                 <argument>list</argument>
                                 <argument>--projectId</argument>
                                 <argument>${projectId}</argument>
+                                <argument>--sessionId</argument>
+                                <argument>${sessionId}</argument>
                             </arguments>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>

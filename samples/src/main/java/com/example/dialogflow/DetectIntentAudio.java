@@ -55,7 +55,7 @@ public class DetectIntentAudio {
     // Instantiates a client
     try (SessionsClient sessionsClient = SessionsClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
       System.out.println("Session Path: " + session.toString());
 
       // Note: hard coding audioEncoding and sampleRateHertz for simplicity.

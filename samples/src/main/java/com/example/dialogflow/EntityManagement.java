@@ -43,7 +43,7 @@ public class EntityManagement {
     // Instantiates a client
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
       // Set the entity type name using the projectID (my-project-id) and entityTypeId (KIND_LIST)
-      EntityTypeName name = EntityTypeName.create(projectId, entityTypeId);
+      EntityTypeName name = EntityTypeName.of(projectId, entityTypeId);
 
       // Performs the get entity type request
       EntityType entityType = entityTypesClient.getEntityType(name);
@@ -73,7 +73,7 @@ public class EntityManagement {
     // Instantiates a client
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
       // Set the entity type name using the projectID (my-project-id) and entityTypeId (KINDS_LIST)
-      EntityTypeName name = EntityTypeName.create(projectId, entityTypeId);
+      EntityTypeName name = EntityTypeName.of(projectId, entityTypeId);
 
       // Build the entity
       Entity entity = Entity.newBuilder()
@@ -103,7 +103,7 @@ public class EntityManagement {
     // Instantiates a client
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
       // Set the entity type name using the projectID (my-project-id) and entityTypeId (KINDS_LIST)
-      EntityTypeName name = EntityTypeName.create(projectId, entityTypeId);
+      EntityTypeName name = EntityTypeName.of(projectId, entityTypeId);
 
       // Performs the delete entity type request
       entityTypesClient.batchDeleteEntitiesAsync(name, Arrays.asList(entityValue))
@@ -126,6 +126,11 @@ public class EntityManagement {
       if (method.equals("list")) {
         if (command.equals("--projectId")) {
           projectId = args[2];
+        }
+
+        command = args[3];
+        if (command.equals("--entityTypeId")) {
+          entityTypeId = args[4];
         }
       } else if (method.equals("create") || method.equals("delete")) {
         entityValue = command;

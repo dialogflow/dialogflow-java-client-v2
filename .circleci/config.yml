@@ -5,17 +5,61 @@ jobs:
     docker:
       - image: circleci/openjdk:8-jdk-browsers
     steps:
+      # Remove after the library pushed to maven
+      # ---------- Start ---------------
+      - run: 
+          name: make temp dir
+          command: |
+            mkdir -p /tmp/other_repos
+      - run:
+          name: Setup known host
+          command: |
+            mkdir -p ~/.ssh/ 
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - run:
+          name: proto/grpc
+          environment:
+            TERM: dumb
+          command: |
+            cd /tmp/other_repos
+            git clone git@github.com:googleapis/api-client-staging-private.git
+            cd api-client-staging-private
+            git checkout -b dialogflow3 origin/dialogflow3
+            cd generated/java/
+            cd proto-google-cloud-dialogflow-v2beta1
+            ./gradlew install
+            cd ../grpc-google-cloud-dialogflow-v2beta1
+            ./gradlew install
+            cd ../../../..
+      - run:
+          name: google-cloud-java
+          command: |
+            cd /tmp/other_repos
+            git clone git@github.com:GoogleCloudPlatform/google-cloud-java-private.git
+            cd google-cloud-java-private
+            git checkout -b dialogflow3 origin/dialogflow3
+            mvn install -DskipTests
+      # ---------- End  ---------------
+      - checkout
       - run:
           name: Create Google Application Credential file
           command: |
             echo ${GOOGLE_APPLICATION_CREDENTIALS_CONTENT} > /tmp/key.json
-      # Add integration test command
+      - run:
+          name: Run integration test
+          environment:
+            GCLOUD_PROJECT: ${GCLOUD_PROJECT}
+            GOOGLE_APPLICATION_CREDENTIALS: /tmp/key.json
+          command: |
+            cd samples
+            mvn clean verify
       - run:
           name: Delete Google Application Credential file
           when: always
           command: |
             rm /tmp/key.json
-      # Store test report
+      - store_test_results:
+          path: samples/target/failsafe-reports
 workflows:
   version: 2
   sample_build_integration_test:

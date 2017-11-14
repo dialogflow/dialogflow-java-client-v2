@@ -127,6 +127,11 @@ public class EntityManagement {
         if (command.equals("--projectId")) {
           projectId = args[2];
         }
+
+        command = args[3];
+        if (command.equals("--entityTypeId")) {
+          entityTypeId = args[4];
+        }
       } else if (method.equals("create") || method.equals("delete")) {
         entityValue = command;
         command = args[2];

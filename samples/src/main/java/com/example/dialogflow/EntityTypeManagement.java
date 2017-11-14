@@ -141,7 +141,7 @@ public class EntityTypeManagement {
           projectId = args[3];
         }
 
-        if (args.length > 3) {
+        if (args.length > 4) {
           command = args[4];
           if (command.equals("--kind")) {
             kind = args[5];
@@ -164,7 +164,7 @@ public class EntityTypeManagement {
           + "-Dexec.args='create employee --projectId PROJECT_ID'\n");
 
       System.out.println("mvn exec:java -DEntityTypeManagement "
-          + "-Dexec.args='delete e57238e2-e692-44ea-9216-6be1b2332e2a --projectId PROJECT_ID'\n");
+          + "-Dexec.args='delete ENTITY_TYPE_ID --projectId PROJECT_ID'\n");
 
       System.out.println("Commands: list");
       System.out.println("\t--projectId <projectId> - Project/Agent Id");

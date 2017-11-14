@@ -49,6 +49,7 @@ public class DetectIntentTexts {
    */
   public static void detectIntentTexts(String projectId, List<String> texts, String sessionId,
       String languageCode) throws Exception {
+    // Instantiates a client
     try (SessionsClient sessionsClient = SessionsClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
       SessionName session = SessionName.create(projectId, sessionId);
@@ -108,7 +109,7 @@ public class DetectIntentTexts {
     } catch (Exception e) {
       System.out.println("Usage:");
       System.out.println("mvn exec:java -DDetectIntentTexts "
-          + "-Dexec.args='--projectId PROJECT_ID --session-id SESSION_ID "
+          + "-Dexec.args='--projectId PROJECT_ID --sessionId SESSION_ID "
           + "\"hello\" \"book a meeting room\" \"Mountain View\" \"tomorrow\" "
           + "\"10am\" \"2 hours\" \"10 people\" \"A\" \"yes\"'\n");
 

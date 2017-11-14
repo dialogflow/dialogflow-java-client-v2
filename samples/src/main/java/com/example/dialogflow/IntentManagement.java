@@ -204,7 +204,7 @@ public class IntentManagement {
           + "--messageTexts \"Are you sure you want to cancel?\" \"Cancelled.\"'\n");
 
       System.out.println("mvn exec:java -DIntentManagement "
-          + "-Dexec.args='delete 74892d81-7901-496a-bb0a-c769eda5180e --projectId PROJECT_ID'\n");
+          + "-Dexec.args='delete INTENT_ID --projectId PROJECT_ID'\n");
 
       System.out.println("Commands: list");
       System.out.println("\t--projectId <projectId> - Project/Agent Id");

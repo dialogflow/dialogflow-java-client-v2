@@ -43,7 +43,7 @@ public class SessionEntityTypeManagement {
     // Instantiates a client
     try (SessionEntityTypesClient sessionEntityTypesClient = SessionEntityTypesClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
 
       System.out.format("SessionEntityTypes for session %s:\n", session.toString());
       // Performs the list session entity types request
@@ -71,7 +71,7 @@ public class SessionEntityTypeManagement {
     // Instantiates a client
     try (SessionEntityTypesClient sessionEntityTypesClient = SessionEntityTypesClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
       SessionEntityTypeName name = SessionEntityTypeName.create(projectId, sessionId,
           entityTypeDisplayName);
 
@@ -111,7 +111,7 @@ public class SessionEntityTypeManagement {
       String entityTypeDisplayName) throws Exception {
     // Instantiates a client
     try (SessionEntityTypesClient sessionEntityTypesClient = SessionEntityTypesClient.create()) {
-      SessionEntityTypeName name = SessionEntityTypeName.create(projectId, sessionId,
+      SessionEntityTypeName name = SessionEntityTypeName.of(projectId, sessionId,
           entityTypeDisplayName);
 
       // Performs the delete session entity type request

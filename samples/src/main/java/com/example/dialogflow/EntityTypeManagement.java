@@ -41,7 +41,7 @@ public class EntityTypeManagement {
     // Instantiates a client
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
       // Set the project agent name using the projectID (my-project-id)
-      ProjectAgentName parent = ProjectAgentName.create(projectId);
+      ProjectAgentName parent = ProjectAgentName.of(projectId);
 
       // Performs the list entity types request
       for (EntityType entityType : entityTypesClient.listEntityTypes(parent).iterateAll()) {
@@ -64,7 +64,7 @@ public class EntityTypeManagement {
     // Instantiates a client
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
       // Set the project agent name using the projectID (my-project-id)
-      ProjectAgentName parent = ProjectAgentName.create(projectId);
+      ProjectAgentName parent = ProjectAgentName.of(projectId);
 
       // Entity types serve as a tool for extracting parameter values from natural language queries.
       EntityType entityType = EntityType.newBuilder()
@@ -89,7 +89,7 @@ public class EntityTypeManagement {
     // Instantiates a client
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
       // Set the entity type name using the projectID (my-project-id) and entityTypeId (KIND_LIST)
-      EntityTypeName name = EntityTypeName.create(projectId, entityTypeId);
+      EntityTypeName name = EntityTypeName.of(projectId, entityTypeId);
 
       // Performs the delete entity type request
       entityTypesClient.deleteEntityType(name);
@@ -105,7 +105,7 @@ public class EntityTypeManagement {
     List<String> entityTypesIds = new ArrayList<>();
 
     try (EntityTypesClient entityTypesClient = EntityTypesClient.create()) {
-      ProjectAgentName parent = ProjectAgentName.create(projectId);
+      ProjectAgentName parent = ProjectAgentName.of(projectId);
       // Performs the list entity types request
       for (EntityType entityType : entityTypesClient.listEntityTypes(parent).iterateAll()) {
         if (entityType.getDisplayName().equals(displayName)) {

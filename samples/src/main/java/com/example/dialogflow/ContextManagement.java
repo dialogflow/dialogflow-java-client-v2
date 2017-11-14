@@ -41,7 +41,7 @@ public class ContextManagement {
     // Instantiates a client
     try (ContextsClient contextsClient = ContextsClient.create()) {
       // Set the session name using the sessionId (UUID) and projectId (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
 
       // Performs the list contexts request
       System.out.format("Contexts for session %s:\n", session.toString());
@@ -71,7 +71,7 @@ public class ContextManagement {
     // Instantiates a client
     try (ContextsClient contextsClient = ContextsClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
-      SessionName session = SessionName.create(projectId, sessionId);
+      SessionName session = SessionName.of(projectId, sessionId);
 
       // Create the context name with the projectId, sessionId, and contextId
       ContextName contextName = ContextName.newBuilder()
@@ -105,7 +105,7 @@ public class ContextManagement {
     // Instantiates a client
     try (ContextsClient contextsClient = ContextsClient.create()) {
       // Create the context name with the projectId, sessionId, and contextId
-      ContextName contextName = ContextName.create(projectId, sessionId, contextId);
+      ContextName contextName = ContextName.of(projectId, sessionId, contextId);
       // Performs the delete context request
       contextsClient.deleteContext(contextName);
     }

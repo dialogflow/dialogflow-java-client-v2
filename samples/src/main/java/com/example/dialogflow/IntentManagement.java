@@ -45,7 +45,7 @@ public class IntentManagement {
     // Instantiates a client
     try (IntentsClient intentsClient = IntentsClient.create()) {
       // Set the project agent name using the projectID (my-project-id)
-      ProjectAgentName parent = ProjectAgentName.create(projectId);
+      ProjectAgentName parent = ProjectAgentName.of(projectId);
 
       // Performs the list intents request
       for (Intent intent : intentsClient.listIntents(parent).iterateAll()) {
@@ -84,7 +84,7 @@ public class IntentManagement {
     // Instantiates a client
     try (IntentsClient intentsClient = IntentsClient.create()) {
       // Set the project agent name using the projectID (my-project-id)
-      ProjectAgentName parent = ProjectAgentName.create(projectId);
+      ProjectAgentName parent = ProjectAgentName.of(projectId);
 
       // Build the trainingPhrases from the trainingPhrasesParts
       List<TrainingPhrase> trainingPhrases = new ArrayList<>();
@@ -126,7 +126,7 @@ public class IntentManagement {
   public static void deleteIntent(String intentId, String projectId) throws Exception {
     // Instantiates a client
     try (IntentsClient intentsClient = IntentsClient.create()) {
-      IntentName name = IntentName.create(projectId, intentId);
+      IntentName name = IntentName.of(projectId, intentId);
       // Performs the delete intent request
       intentsClient.deleteIntent(name);
     }
@@ -141,7 +141,7 @@ public class IntentManagement {
 
     // Instantiates a client
     try (IntentsClient intentsClient = IntentsClient.create()) {
-      ProjectAgentName parent = ProjectAgentName.create(projectId);
+      ProjectAgentName parent = ProjectAgentName.of(projectId);
       for (Intent intent : intentsClient.listIntents(parent).iterateAll()) {
         if (intent.getDisplayName().equals(displayName)) {
           String[] splitName = intent.getName().split("/");

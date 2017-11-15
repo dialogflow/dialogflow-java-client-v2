@@ -2,14 +2,6 @@ version: 2
 jobs:
   sample_integration_test:
     working_directory: ~/dialogflow-java
-    filters:
-      branches:
-        only:
-          - master
-          - circleci-config
-          - dialogflow-ci-integration
-      tags:
-        only: /^v[\d.]+$/
     docker:
       - image: circleci/openjdk:8-jdk-browsers
     steps:
@@ -26,8 +18,14 @@ jobs:
       # Store test report
 workflows:
   version: 2
-  sample_integration_test:
+  sample_build_integration_test:
     jobs:
-      - sample_integration_test
-
-          
+      - sample_integration_test:
+          filters:
+            branches:
+              only:
+                - master
+                - circleci-config
+                - dialogflow-ci-integration
+            tags:
+              only: /^v[\d.]+$/

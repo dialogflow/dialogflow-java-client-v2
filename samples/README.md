@@ -48,22 +48,21 @@ To build the sample, we use Maven.
 mvn clean package
 ```
 
+### Set up the Agent
+Import the sample agent (RoomReservation.zip) from the resources directory to your
+[Dialogflow Project][dialogflow-import] using the following guide: 
+[Versioning with Import/Export][import-export-versioning]
+
+[dialogflow-import]: https://console.dialogflow.com/api-client/#/editAgent/
+[import-export-versioning]: https://dialogflow.com/docs/best-practices/import-export-for-versions
+
 ## Samples
 
-### Context Management
-DialogFlow API Context sample.
+### Detect Intent Texts
+DialogFlow API Detect Intent sample with text inputs.
 
-Lists contexts:
 ```
-mvn exec:java -DContextManagementList
-```
-Create an entity type with the given display name:
-```
-mvn exec:java -DContextManagementCreate
-```
-Delete entity type with the given entity type name:
-```
-mvn exec:java -DContextManagementDelete
+mvn exec:java -DDetectIntentTexts
 ```
 
 ### Detect Intent Audio
@@ -99,11 +98,20 @@ mvn exec:java -DDetectIntentStreamBookARoom
 mvn exec:java -DDetectIntentStreamMountainView
 ```
 
-### Detect Intent Texts
-DialogFlow API Detect Intent sample with text inputs.
+### Context Management
+DialogFlow API Context sample.
 
+Lists contexts:
 ```
-mvn exec:java -DDetectIntentText
+mvn exec:java -DContextManagementList
+```
+Create an entity type with the given display name:
+```
+mvn exec:java -DContextManagementCreate
+```
+Delete entity type with the given entity type name:
+```
+mvn exec:java -DContextManagementDelete
 ```
 
 ### Entity Management
@@ -134,16 +142,8 @@ Create an entity type with the given display name
 mvn exec:java -DEntityTypeManagementCreate
 ```
 Delete entity type with the given entity type name
-
-Example output from `mvn exec:java -DEntityTypeManagementCreate`:
-"projects/java-docs-samples-testing/agent/entityTypes/86f57a32-483a-4818-b080-764dbcb31c6a"
-
-ENTITY_TYPE_ID=86f57a32-483a-4818-b080-764dbcb31c6a
-
-Use the outputted ENTITY_TYPE_ID from your `mvn exec:java -DEntityTypeManagementCreate` call
 ```
-mvn exec:java -DEntityTypeManagementDelete  -Dexec.args='delete ENTITY_TYPE_ID
---projectId PROJECT_ID' 
+mvn exec:java -DEntityTypeManagementDelete
 ```
 
 ### Intent Management
@@ -158,15 +158,8 @@ Create an intent of the given intent type
 mvn exec:java -DIntentManagementCreate
 ```
 Delete intent with the given intent type and intent value
-
-Example output from `mvn exec:java -DIntentManagementCreate`:
-"Intent created: name:"projects/java-docs-samples-testing/agent/intents/5294c404-2516-47df-9a36-f0168ceca6f8""
-
-INTENT_ID=5294c404-2516-47df-9a36-f0168ceca6f8
-
-Use the outputted INTENT_ID from your `mvn exec:java -DIntentManagementCreate` call
 ```
-mvn exec:java -DIntentManagementDelete -Dexec.args='delete INTENT_ID --projectId PROJECT_ID'
+mvn exec:java -DIntentManagementDelete
 ```
 
 ### Session Entity Type Management

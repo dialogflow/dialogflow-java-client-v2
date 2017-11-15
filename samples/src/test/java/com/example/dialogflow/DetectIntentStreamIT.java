@@ -63,6 +63,6 @@ public class DetectIntentStreamIT {
 
     String got = bout.toString();
     assertThat(got).contains("Intermediate transcript: 'book'");
-    assertThat(got).contains("Fulfillment Text: 'What time will the meeting start?'");
+    assertThat(got).contains("Detected Intent: room.reservation");
   }
 }

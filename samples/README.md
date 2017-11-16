@@ -34,7 +34,16 @@ To get started, [download][maven-download] and [install][maven-install] it.
     ```bash
     export GOOGLE_APPLICATION_CREDENTIALS=/path/to/your-project-credentials.json
     ```
+* To run tests, set GOOGLE_CLOUD_PROJECT to your PROJECT_ID:
+  ```
+  export GOOGLE_CLOUD_PROJECT=PROJECT_ID
+  ```
+  ```
+  mvn clean verify
+  ```
 * Set PROJECT_ID in pom.xml to your Google Cloud Project Id.
+* Set SESSION_ID in pom.xml to a session name of your choice. (Defaults to SESSION_ID)
+* Set CONTEXT_ID in pom.xml to a context name of your choice. (Defaults to CONTEXT_ID)
 
 [cloud-console]: https://console.cloud.google.com
 [dialogflow-api]: https://pantheon.corp.google.com/apis/library/dialogflow.googleapis.com
@@ -69,6 +78,7 @@ mvn exec:java -DDetectIntentTexts
 DialogFlow API Detect Intent sample with audio files. Returns the result of detect intent with an
 audio file as input.
 
+Note: Execute the following commands in order to yield reasonable outputs.
 ```
 mvn exec:java -DDetectIntentAudioBookARoom
 ```
@@ -101,15 +111,15 @@ mvn exec:java -DDetectIntentStreamMountainView
 ### Context Management
 DialogFlow API Context sample.
 
-Lists contexts:
+Lists contexts
 ```
 mvn exec:java -DContextManagementList
 ```
-Create an entity type with the given display name:
+Create an entity type
 ```
 mvn exec:java -DContextManagementCreate
 ```
-Delete entity type with the given entity type name:
+Delete entity type
 ```
 mvn exec:java -DContextManagementDelete
 ```
@@ -121,11 +131,11 @@ List entities
 ```
 mvn exec:java -DEntityManagementList
 ```
-Create an entity of the given entity type
+Create an entity
 ```
 mvn exec:java -DEntityManagementCreate
 ```
-Delete entity with the given entity type and entity value
+Delete entity
 ```
 mvn exec:java -DEntityManagementDelete
 ```
@@ -137,11 +147,11 @@ List entity types
 ```
 mvn exec:java -DEntityTypeManagementList
 ```
-Create an entity type with the given display name
+Create an entity type
 ```
 mvn exec:java -DEntityTypeManagementCreate
 ```
-Delete entity type with the given entity type name
+Delete entity type
 ```
 mvn exec:java -DEntityTypeManagementDelete
 ```
@@ -153,11 +163,11 @@ List intents
 ```
 mvn exec:java -DIntentManagementList
 ```
-Create an intent of the given intent type
+Create an intent
 ```
 mvn exec:java -DIntentManagementCreate
 ```
-Delete intent with the given intent type and intent value
+Delete intent
 ```
 mvn exec:java -DIntentManagementDelete
 ```
@@ -169,11 +179,11 @@ List session entity types
 ```
 mvn exec:java -DSessionEntityTypeManagementList
 ```
-Create an entity type with the given display name
+Create session entity type
 ```
 mvn exec:java -DSessionEntityTypeManagementCreate
 ```
-Delete entity type with the given entity type name
+Delete session entity type
 ```
 mvn exec:java -DSessionEntityTypeManagementDelete
 ```

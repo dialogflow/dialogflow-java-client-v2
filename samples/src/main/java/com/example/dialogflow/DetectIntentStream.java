@@ -137,7 +137,7 @@ public class DetectIntentStream {
         throw responseThrowables.get(0);
       }
       if (responses.isEmpty()) {
-        throw new RuntimeException("No response from CCE.");
+        throw new RuntimeException("No response from Dialogflow.");
       }
 
       for (StreamingDetectIntentResponse response : responses) {

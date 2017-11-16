@@ -109,9 +109,9 @@ public class DetectIntentTexts {
     } catch (Exception e) {
       System.out.println("Usage:");
       System.out.println("mvn exec:java -DDetectIntentTexts "
-          + "-Dexec.args='--projectId PROJECT_ID --sessionId SESSION_ID "
-          + "\"hello\" \"book a meeting room\" \"Mountain View\" \"tomorrow\" "
-          + "\"10am\" \"2 hours\" \"10 people\" \"A\" \"yes\"'\n");
+          + "-Dexec.args=\"--projectId PROJECT_ID --sessionId SESSION_ID "
+          + "'hello' 'book a meeting room' 'Mountain View' 'tomorrow' '10 am' '2 hours' " 
+          + "'10 people' 'A' 'yes'\"\n");
 
       System.out.println("Commands: text");
       System.out.println("\t--projectId <projectId> - Project/Agent Id");

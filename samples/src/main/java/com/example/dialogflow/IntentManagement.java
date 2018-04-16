@@ -18,15 +18,15 @@ package com.example.dialogflow;
 
 // [START dialogflow_import_libraries]
 // Imports the Google Cloud client library
-import com.google.cloud.dialogflow.v2beta1.Context;
-import com.google.cloud.dialogflow.v2beta1.Intent;
-import com.google.cloud.dialogflow.v2beta1.Intent.Message;
-import com.google.cloud.dialogflow.v2beta1.Intent.Message.Text;
-import com.google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase;
-import com.google.cloud.dialogflow.v2beta1.Intent.TrainingPhrase.Part;
-import com.google.cloud.dialogflow.v2beta1.IntentName;
-import com.google.cloud.dialogflow.v2beta1.IntentsClient;
-import com.google.cloud.dialogflow.v2beta1.ProjectAgentName;
+import com.google.cloud.dialogflow.v2.Context;
+import com.google.cloud.dialogflow.v2.Intent;
+import com.google.cloud.dialogflow.v2.Intent.Message;
+import com.google.cloud.dialogflow.v2.Intent.Message.Text;
+import com.google.cloud.dialogflow.v2.Intent.TrainingPhrase;
+import com.google.cloud.dialogflow.v2.Intent.TrainingPhrase.Part;
+import com.google.cloud.dialogflow.v2.IntentName;
+import com.google.cloud.dialogflow.v2.IntentsClient;
+import com.google.cloud.dialogflow.v2.ProjectAgentName;
 
 import java.util.ArrayList;
 import java.util.List;

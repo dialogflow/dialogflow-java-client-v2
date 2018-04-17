@@ -18,14 +18,14 @@ package com.example.dialogflow;
 
 // [START dialogflow_import_libraries]
 // Imports the Google Cloud client library
-import com.google.cloud.dialogflow.v2beta1.AudioEncoding;
-import com.google.cloud.dialogflow.v2beta1.DetectIntentRequest;
-import com.google.cloud.dialogflow.v2beta1.DetectIntentResponse;
-import com.google.cloud.dialogflow.v2beta1.InputAudioConfig;
-import com.google.cloud.dialogflow.v2beta1.QueryInput;
-import com.google.cloud.dialogflow.v2beta1.QueryResult;
-import com.google.cloud.dialogflow.v2beta1.SessionName;
-import com.google.cloud.dialogflow.v2beta1.SessionsClient;
+import com.google.cloud.dialogflow.v2.AudioEncoding;
+import com.google.cloud.dialogflow.v2.DetectIntentRequest;
+import com.google.cloud.dialogflow.v2.DetectIntentResponse;
+import com.google.cloud.dialogflow.v2.InputAudioConfig;
+import com.google.cloud.dialogflow.v2.QueryInput;
+import com.google.cloud.dialogflow.v2.QueryResult;
+import com.google.cloud.dialogflow.v2.SessionName;
+import com.google.cloud.dialogflow.v2.SessionsClient;
 import com.google.protobuf.ByteString;
 
 import java.nio.file.Files;
@@ -78,7 +78,7 @@ public class DetectIntentAudio {
 
       // Build the DetectIntentRequest
       DetectIntentRequest request = DetectIntentRequest.newBuilder()
-          .setSessionWithSessionName(session)
+          .setSession(session.toString())
           .setQueryInput(queryInput)
           .setInputAudio(ByteString.copyFrom(inputAudio))
           .build();

@@ -18,13 +18,13 @@ package com.example.dialogflow;
 
 // [START dialogflow_import_libraries]
 // Imports the Google Cloud client library
-import com.google.cloud.dialogflow.v2beta1.DetectIntentResponse;
-import com.google.cloud.dialogflow.v2beta1.QueryInput;
-import com.google.cloud.dialogflow.v2beta1.QueryResult;
-import com.google.cloud.dialogflow.v2beta1.SessionName;
-import com.google.cloud.dialogflow.v2beta1.SessionsClient;
-import com.google.cloud.dialogflow.v2beta1.TextInput;
-import com.google.cloud.dialogflow.v2beta1.TextInput.Builder;
+import com.google.cloud.dialogflow.v2.DetectIntentResponse;
+import com.google.cloud.dialogflow.v2.QueryInput;
+import com.google.cloud.dialogflow.v2.QueryResult;
+import com.google.cloud.dialogflow.v2.SessionName;
+import com.google.cloud.dialogflow.v2.SessionsClient;
+import com.google.cloud.dialogflow.v2.TextInput;
+import com.google.cloud.dialogflow.v2.TextInput.Builder;
 
 import java.util.ArrayList;
 import java.util.List;

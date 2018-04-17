@@ -18,10 +18,10 @@ package com.example.dialogflow;
 
 // [START dialogflow_import_libraries]
 // Imports the Google Cloud client library
-import com.google.cloud.dialogflow.v2beta1.Context;
-import com.google.cloud.dialogflow.v2beta1.ContextName;
-import com.google.cloud.dialogflow.v2beta1.ContextsClient;
-import com.google.cloud.dialogflow.v2beta1.SessionName;
+import com.google.cloud.dialogflow.v2.Context;
+import com.google.cloud.dialogflow.v2.ContextName;
+import com.google.cloud.dialogflow.v2.ContextsClient;
+import com.google.cloud.dialogflow.v2.SessionName;
 import com.google.protobuf.Value;
 
 import java.util.Map.Entry;
@@ -82,7 +82,7 @@ public class ContextManagement {
 
       // Create the context with the context name and lifespan count
       Context context = Context.newBuilder()
-          .setNameWithContextName(contextName) // The unique identifier of the context
+          .setName(contextName.toString()) // The unique identifier of the context
           .setLifespanCount(lifespanCount) // Number of query requests before the context expires.
           .build();
 

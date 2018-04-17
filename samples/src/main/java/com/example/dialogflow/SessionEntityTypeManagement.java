@@ -18,12 +18,12 @@ package com.example.dialogflow;
 
 // [START dialogflow_import_libraries]
 // Imports the Google Cloud client library
-import com.google.cloud.dialogflow.v2beta1.EntityType.Entity;
-import com.google.cloud.dialogflow.v2beta1.SessionEntityType;
-import com.google.cloud.dialogflow.v2beta1.SessionEntityType.EntityOverrideMode;
-import com.google.cloud.dialogflow.v2beta1.SessionEntityTypeName;
-import com.google.cloud.dialogflow.v2beta1.SessionEntityTypesClient;
-import com.google.cloud.dialogflow.v2beta1.SessionName;
+import com.google.cloud.dialogflow.v2.EntityType.Entity;
+import com.google.cloud.dialogflow.v2.SessionEntityType;
+import com.google.cloud.dialogflow.v2.SessionEntityType.EntityOverrideMode;
+import com.google.cloud.dialogflow.v2.SessionEntityTypeName;
+import com.google.cloud.dialogflow.v2.SessionEntityTypesClient;
+import com.google.cloud.dialogflow.v2.SessionName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class SessionEntityTypeManagement {
     try (SessionEntityTypesClient sessionEntityTypesClient = SessionEntityTypesClient.create()) {
       // Set the session name using the sessionId (UUID) and projectID (my-project-id)
       SessionName session = SessionName.of(projectId, sessionId);
-      SessionEntityTypeName name = SessionEntityTypeName.create(projectId, sessionId,
+      SessionEntityTypeName name = SessionEntityTypeName.of(projectId, sessionId,
           entityTypeDisplayName);
 
       List<Entity> entities = new ArrayList<>();
@@ -86,7 +86,7 @@ public class SessionEntityTypeManagement {
       // Extends or replaces a developer entity type at the user session level (we refer to the
       // entity types defined at the agent level as "developer entity types").
       SessionEntityType sessionEntityType = SessionEntityType.newBuilder()
-          .setNameWithSessionEntityTypeName(name)
+          .setName(name.toString())
           .addAllEntities(entities)
           .setEntityOverrideMode(EntityOverrideMode.forNumber(entityOverrideMode))
           .build();

@@ -18,11 +18,11 @@ package com.example.dialogflow;
 
 // [START dialogflow_import_libraries]
 // Imports the Google Cloud client library
-import com.google.cloud.dialogflow.v2beta1.EntityType;
-import com.google.cloud.dialogflow.v2beta1.EntityType.Kind;
-import com.google.cloud.dialogflow.v2beta1.EntityTypeName;
-import com.google.cloud.dialogflow.v2beta1.EntityTypesClient;
-import com.google.cloud.dialogflow.v2beta1.ProjectAgentName;
+import com.google.cloud.dialogflow.v2.EntityType;
+import com.google.cloud.dialogflow.v2.EntityType.Kind;
+import com.google.cloud.dialogflow.v2.EntityTypeName;
+import com.google.cloud.dialogflow.v2.EntityTypesClient;
+import com.google.cloud.dialogflow.v2.ProjectAgentName;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class IntentManagement {
 
+  // [START dialogflow_list_intents]
   /**
    * List intents
    * @param projectId Project/Agent Id.
@@ -68,9 +69,9 @@ public class IntentManagement {
       }
     }
   }
+  // [END dialogflow_list_intents]
 
   // [START dialogflow_create_intent]
-
   /**
    * Create an intent of the given intent type
    * @param displayName The display name of the intent.
@@ -117,7 +118,6 @@ public class IntentManagement {
   // [END dialogflow_create_intent]
 
   // [START dialogflow_delete_intent]
-
   /**
    * Delete intent with the given intent type and intent value
    * @param intentId The id of the intent.

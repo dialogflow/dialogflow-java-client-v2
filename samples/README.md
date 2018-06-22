@@ -46,7 +46,7 @@ To get started, [download][maven-download] and [install][maven-install] it.
 * Set CONTEXT_ID in pom.xml to a context name of your choice. (Defaults to CONTEXT_ID)
 
 [cloud-console]: https://console.cloud.google.com
-[dialogflow-api]: https://pantheon.corp.google.com/apis/library/dialogflow.googleapis.com
+[dialogflow-api]: https://console.cloud.google.com/apis/library/dialogflow.googleapis.com
 [auth]: https://cloud.google.com/docs/authentication/getting-started
 
 ## Run the sample

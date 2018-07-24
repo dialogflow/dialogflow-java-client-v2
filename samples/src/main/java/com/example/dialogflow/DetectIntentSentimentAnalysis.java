@@ -18,12 +18,12 @@ package com.example.dialogflow;
 
 import com.google.cloud.dialogflow.v2beta1.DetectIntentRequest;
 import com.google.cloud.dialogflow.v2beta1.DetectIntentResponse;
-import com.google.cloud.dialogflow.v2beta1.OutputAudioConfig;
-import com.google.cloud.dialogflow.v2beta1.OutputAudioEncoding;
-import com.google.cloud.dialogflow.v2beta1.QueryInput;
-import com.google.cloud.dialogflow.v2beta1.QueryResult;
 import com.google.cloud.dialogflow.v2beta1.SessionName;
 import com.google.cloud.dialogflow.v2beta1.SessionsClient;
+import com.google.cloud.dialogflow.v2beta1.QueryInput;
+import com.google.cloud.dialogflow.v2beta1.QueryParameters;
+import com.google.cloud.dialogflow.v2beta1.QueryResult;
+import com.google.cloud.dialogflow.v2beta1.SentimentAnalysisRequestConfig;
 import com.google.cloud.dialogflow.v2beta1.TextInput;
 import com.google.cloud.dialogflow.v2beta1.TextInput.Builder;
 
@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DetectIntentTTSResponses {
+public class DetectIntentSentimentAnalysis {
 
-  //   [START dialogflow_detect_intent_with_texttospeech_response]
+  // [START dialogflow_detect_intent_with_sentiment_analysis]
   /**
    * Returns the result of detect intent with texts as inputs.
    *
@@ -44,7 +44,7 @@ public class DetectIntentTTSResponses {
    * @param sessionId Identifier of the DetectIntent session.
    * @param languageCode Language code of the query.
    */
-  public static void detectIntentWithTexttoSpeech(
+  public static void detectIntentSentimentAnalysis(
       String projectId, List<String> texts, String sessionId, String languageCode)
       throws Exception {
     // Instantiates a client
@@ -62,25 +62,22 @@ public class DetectIntentTTSResponses {
         QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
 
         //
-        OutputAudioEncoding audioEncoding = OutputAudioEncoding.OUTPUT_AUDIO_ENCODING_LINEAR_16;
-        int sampleRateHertz = 16000;
-        OutputAudioConfig outputAudioConfig =
-            OutputAudioConfig.newBuilder()
-                .setAudioEncoding(audioEncoding)
-                .setSampleRateHertz(sampleRateHertz)
-                .build();
+        SentimentAnalysisRequestConfig sentimentAnalysisRequestConfig =
+            SentimentAnalysisRequestConfig.newBuilder().setAnalyzeQueryTextSentiment(true).build();
 
-        DetectIntentRequest dr =
+        QueryParameters queryParameters =
+            QueryParameters.newBuilder()
+                .setSentimentAnalysisRequestConfig(sentimentAnalysisRequestConfig)
+                .build();
+        DetectIntentRequest detectIntentRequest =
             DetectIntentRequest.newBuilder()
-                .setQueryInput(queryInput)
-                .setOutputAudioConfig(outputAudioConfig)
                 .setSession(session.toString())
+                .setQueryInput(queryInput)
+                .setQueryParams(queryParameters)
                 .build();
 
         // Performs the detect intent request
-        // DetectIntentResponse response = sessionsClient.detectIntent(session,
-        // queryInput,outputAudioConfig);
-        DetectIntentResponse response = sessionsClient.detectIntent(dr);
+        DetectIntentResponse response = sessionsClient.detectIntent(detectIntentRequest);
 
         // Display the query result
         QueryResult queryResult = response.getQueryResult();
@@ -91,11 +88,13 @@ public class DetectIntentTTSResponses {
             "Detected Intent: %s (confidence: %f)\n",
             queryResult.getIntent().getDisplayName(), queryResult.getIntentDetectionConfidence());
         System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
+        System.out.format(
+            "Sentiment Score: '%s'\n",
+            queryResult.getSentimentAnalysisResult().getQueryTextSentiment().getScore());
       }
     }
   }
-
-  // [END dialogflow_detect_intent_with_texttospeech_response]
+  // [END dialogflow_detect_intent_with_sentiment_analysis]
 
   // [START run_application]
   public static void main(String[] args) throws Exception {
@@ -127,7 +126,7 @@ public class DetectIntentTTSResponses {
     } catch (Exception e) {
       System.out.println("Usage:");
       System.out.println(
-          "mvn exec:java -DDetectIntentWithTTSResponses "
+          "mvn exec:java -DDetectIntentWithSentimentAnalysis "
               + "-Dexec.args=\"--projectId PROJECT_ID --sessionId SESSION_ID "
               + "'hello' 'book a meeting room' 'Mountain View' 'tomorrow' '10 am' '2 hours' "
               + "'10 people' 'A' 'yes'\"\n");
@@ -146,7 +145,7 @@ public class DetectIntentTTSResponses {
               + "(Defaults to a random UUID.)");
     }
 
-    detectIntentWithTexttoSpeech(projectId, texts, sessionId, languageCode);
+    detectIntentSentimentAnalysis(projectId, texts, sessionId, languageCode);
   }
   // [END run_application]
 

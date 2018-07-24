@@ -818,6 +818,36 @@
             </build>
         </profile>
 
+      <!--DetectIntentSentimentAnalysis-->
+      <profile>
+        <id>DetectIntentSentimentAnalysis</id>
+        <activation>
+          <property>
+            <name>DetectIntentSentimentAnalysis</name>
+          </property>
+        </activation>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>1.6.0</version>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>java</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <mainClass>com.example.dialogflow.DetectIntentSentimentAnalysis</mainClass>
+                <cleanupDaemonThreads>false</cleanupDaemonThreads>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+
         <!--EntityManagement-->
         <profile>
             <id>EntityManagement</id>

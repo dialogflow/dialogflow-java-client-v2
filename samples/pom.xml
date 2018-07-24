@@ -135,7 +135,7 @@
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-dialogflow</artifactId>
-            <version>0.44.0-alpha</version>
+            <version>0.55.1-alpha</version>
         </dependency>
 
         <!-- Test dependencies -->
@@ -743,6 +743,81 @@
             </build>
         </profile>
 
+        <!--DetectIntentTTSResponses-->
+        <profile>
+            <id>DetectIntentTTSResponses</id>
+            <activation>
+                <property>
+                    <name>DetectIntentTTSResponses</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.DetectIntentTTSResponses</mainClass>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--DetectIntentTTSResponse-->
+        <profile>
+            <id>DetectIntentTTSResponse</id>
+            <activation>
+                <property>
+                    <name>DetectIntentTTSResponse</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.DetectIntentTTSResponses</mainClass>
+                            <arguments>
+                                <argument>--projectId</argument>
+                                <argument>${projectId}</argument>
+                                <argument>--sessionId</argument>
+                                <argument>${sessionId}</argument>
+                                <argument>"hello"</argument>
+                                <argument>"book a meeting room"</argument>
+                                <argument>"Mountain View"</argument>
+                                <argument>"tomorrow"</argument>
+                                <argument>"10 am"</argument>
+                                <argument>"2 hours"</argument>
+                                <argument>"10 people"</argument>
+                                <argument>"A"</argument>
+                                <argument>"yes"</argument>
+                            </arguments>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!--EntityManagement-->
         <profile>
             <id>EntityManagement</id>
@@ -766,6 +841,36 @@
                         </executions>
                         <configuration>
                             <mainClass>com.example.dialogflow.EntityManagement</mainClass>
+                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--DetectIntentWithModelSelection-->
+        <profile>
+            <id>DetectIntentWithModelSelection</id>
+            <activation>
+                <property>
+                    <name>DetectIntentWithModelSelection</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.example.dialogflow.DetectIntentWithModelSelection</mainClass>
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                         </configuration>
                     </plugin>

@@ -42,14 +42,15 @@ public class DetectIntentKnowledge {
 
   // [START dialogflow_detect_intent_knowledge]
   /**
-   * Returns the result of detect intent with streaming audio as input.
+   * Returns the result of detect intent with text as input.
    *
    * <p>Using the same `session_id` between requests allows continuation of the conversation.
    *
    * @param projectId Project/Agent Id.
-   * @param texts The texts to be processed.
+   * @param knowledgeBaseId Knowledge base Id.
    * @param sessionId Identifier of the DetectIntent session.
    * @param languageCode Language code of the query.
+   * @param texts The texts to be processed.
    * @throws Exception
    */
   public static void detectIntentKnowledge(
@@ -78,14 +79,14 @@ public class DetectIntentKnowledge {
                 .addKnowledgeBaseNames(knowledgeBaseName.toString())
                 .build();
 
-        DetectIntentRequest dr =
+        DetectIntentRequest detectIntentRequest =
             DetectIntentRequest.newBuilder()
                 .setSession(session.toString())
                 .setQueryInput(queryInput)
                 .setQueryParams(queryParameters)
                 .build();
         // Performs the detect intent request
-        DetectIntentResponse response = sessionsClient.detectIntent(dr);
+        DetectIntentResponse response = sessionsClient.detectIntent(detectIntentRequest);
 
         // Display the query result
         QueryResult queryResult = response.getQueryResult();

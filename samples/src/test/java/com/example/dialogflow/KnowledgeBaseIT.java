@@ -68,7 +68,7 @@ public class KnowledgeBaseIT {
 
   @Test
   public void testKnowledgeBase() throws Exception {
- // Check the knowledge base does not yet exist
+    // Check the knowledge base does not yet exist
     knowledgebaseManagement.listKnowledgeBases(PROJECT_ID);
     String got = bout.toString();
     assertThat(got).doesNotContain("Display Name: " + KNOWLEDGE_BASE_NAME);

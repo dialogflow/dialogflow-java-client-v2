@@ -33,9 +33,9 @@ public class KnowledgebaseManagement {
     // Instantiates a client
     try (KnowledgeBasesClient knowledgeBasesClient = KnowledgeBasesClient.create()) {
       // Set the entity type name using the projectID (my-project-id) and entityTypeId (KIND_LIST)
-      ProjectName parent = ProjectName.of(projectId);
+      ProjectName projectName = ProjectName.of(projectId);
       for (KnowledgeBase knowledgeBase :
-          knowledgeBasesClient.listKnowledgeBases(parent).iterateAll()) {
+          knowledgeBasesClient.listKnowledgeBases(projectName).iterateAll()) {
         System.out.format(" - Display Name: %s\n", knowledgeBase.getDisplayName());
         System.out.format(" - Knowledge ID: %s\n", knowledgeBase.getName());
       }
@@ -55,8 +55,8 @@ public class KnowledgebaseManagement {
     try (KnowledgeBasesClient knowledgeBasesClient = KnowledgeBasesClient.create()) {
 
       KnowledgeBase knowledgeBase = KnowledgeBase.newBuilder().setDisplayName(displayName).build();
-      ProjectName parent = ProjectName.of(projectId);
-      KnowledgeBase response = knowledgeBasesClient.createKnowledgeBase(parent, knowledgeBase);
+      ProjectName projectName = ProjectName.of(projectId);
+      KnowledgeBase response = knowledgeBasesClient.createKnowledgeBase(projectName, knowledgeBase);
       System.out.format("Knowledgebase created:\n");
       System.out.format("Display Name: %s \n", response.getDisplayName());
       System.out.format("Knowledge ID: %s \n", response.getName());
